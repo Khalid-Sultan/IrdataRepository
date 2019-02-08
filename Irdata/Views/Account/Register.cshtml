@@ -1,0 +1,151 @@
+﻿@*@model Irdata.Models.RegisterViewModel
+    @{
+        ViewBag.Title = "Register";
+    }
+    <h2>@ViewBag.Title.</h2>
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Create a new account.</h4>
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        <div class="form-group">
+            @Html.LabelFor(model => model.DisplayName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DisplayName, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Number, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-12">
+                @Html.TextBoxFor(model => model.Number, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Register" />
+            </div>
+        </div>
+    }
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+
+@*@model Irdata.Models.RegisterViewModel
+    <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content rounded-0 border-0 p-4">
+                <div class="modal-header border-0">
+                    <h3>Register</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="login">
+                        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "row", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary("", new { @class = "text-danger" })
+                            @Html.HiddenFor(m => m.Id)
+                            <div class="col-12">
+                                @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control mb-3", @placeholder = "Display Name", @id = "signupName" })
+                            </div>
+                            <div class="col-12">
+                                @Html.TextBoxFor(m => m.Number, new { @class = "form-control mb-3", @placeholder = "Phone Number", @id = "signupPhone" })
+                            </div>
+                            <div class="col-12">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control mb-3", @placeholder = "Email Address", @id = "signupEmail" })
+                            </div>
+                            <div class="col-12">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control mb-3", @placeholder = "Password", @id = "signupPassword" })
+                            </div>
+                            <div class="col-12">
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control mb-3", @placeholder = "Confirm Password", @id = "signupConfirmPassword" })
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">
+                                    SIGN UP
+                                </button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/siteScripts")
+    }*@
+@model Irdata.Models.RegisterViewModel
+<section class="hero-section overlay bg-cover" data-background="~/images/banner/banner-1.jpg" name="introSection">
+    <div class="container">
+        <div class="hero-slider">
+            <!-- slider item -->
+            <div class="hero-slider-item">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h1 class="text-white">
+                            Register
+                        </h1>
+                        <p class="text-muted mb-4">
+                            <span style="color: rgb(255, 255, 255); font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+                                Register to participate for this service
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype="multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary("", new { @class = "text-danger" })
+                            @Html.HiddenFor(Model => Model.Id)
+                            <div class="col-12 form-group">
+                                @Html.TextBoxFor(Model => Model.DisplayName, new { @class = "form-control mb-3", @placeholder = "Display Name", @id = "signupName" })
+                            </div>
+                            <div class="col-12 form-group">
+                                @Html.TextBoxFor(Model => Model.Number, new { @class = "form-control mb-3", @placeholder = "Phone Number", @id = "signupPhone" })
+                            </div>
+                            <div class="col-12 form-group">
+                                @Html.TextBoxFor(Model => Model.Email, new { @class = "form-control mb-3", @placeholder = "Email Address", @id = "signupEmail" })
+                            </div>
+                            <div class="col-12 form-group">
+                                @Html.PasswordFor(Model => Model.Password, new { @class = "form-control mb-3", @placeholder = "Password", @id = "signupPassword" })
+                            </div>
+                            <div class="col-12 form-group">
+                                @Html.PasswordFor(Model => Model.ConfirmPassword, new { @class = "form-control mb-3", @placeholder = "Confirm Password", @id = "signupConfirmPassword" })
+                            </div>
+                            <div class="col-12 form-group">
+                                <input type="file" id="Avatar" name="upload" class="btn btn-primary" value="Upload Picture"/>
+                            </div>
+                            <div class="col-8 form-group">
+                                <input type="submit" value="Sign up" class="btn btn-primary" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@Scripts.Render("~/bundles/siteScripts")

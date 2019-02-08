@@ -1,0 +1,146 @@
+﻿@*@using Irdata.Models
+    @model LoginViewModel
+    @{
+        ViewBag.Title = "Log in";
+    }
+    <h2>@ViewBag.Title.</h2>
+    <div class="row">
+        <div class="col-md-8">
+            <section id="loginForm">
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <h4>Use a local account to log in.</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <div class="checkbox">
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                @Html.LabelFor(m => m.RememberMe)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Log in" class="btn btn-default" />
+                        </div>
+                    </div>
+                    <p>
+                        @Html.ActionLink("Register as a new user", "Register")
+                    </p>
+
+                }
+            </section>
+        </div>
+        <div class="col-md-4">
+            <section id="socialLoginForm">
+                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+            </section>
+        </div>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+@*@using Irdata.Models
+    @model LoginViewModel
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content rounded-0 border-0 p-4">
+                <div class="modal-header border-0">
+                    <h3>Login</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    }
+                        <form action="#" class="row">
+                            <div class="col-12">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control mb-3" , @placeholder = "Email Address"})
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-12">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control mb-3" , @placeholder = "Password"})
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-12 checkbox">
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                @Html.LabelFor(m => m.RememberMe)
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">LOGIN</button>
+                            </div>
+                        </form>
+                    </div>
+            </div>
+        </div>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/siteScripts")
+    }*@
+@model Irdata.Models.LoginViewModel
+<section class="hero-section overlay bg-cover" data-background="~/images/banner/banner-1.jpg" name="introSection">
+    <div class="container">
+        <div class="hero-slider">
+            <!-- slider item -->
+            <div class="hero-slider-item">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h1 class="text-white">
+                            Login
+                        </h1>
+                        <p class="text-muted mb-4">
+                            <span style="color: rgb(255, 255, 255); font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+                                Login in with your created account.
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="col-12 form-group">
+                                @*<input type="email" placeholder="Email Address" class="form-control mb-3"/>*@
+                                @Html.TextBoxFor(Model => Model.Email2, new { @class = "form-control mb-3", @placeholder = "Email Address" })
+                                @Html.ValidationMessageFor(Model => Model.Email2, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-12 form-group">
+                                @*<input type="password" class=" form-control mb-3" placeholder="Password"/>*@
+                                @Html.PasswordFor(Model => Model.Password2, new { @class = "form-control mb-3", @placeholder = "Password" })
+                                @Html.ValidationMessageFor(Model => Model.Password2, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-12 checkbox form-group">
+                                @*<input type="checkbox"/>*@
+                                @Html.CheckBoxFor(Model => Model.RememberMe2)
+                                @Html.LabelFor(Model => Model.RememberMe2)
+                            </div>
+                            <div class="col-12 form-group">
+                                <input type="submit" value="Log in" class="btn btn-primary" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

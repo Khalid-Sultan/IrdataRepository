@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Irdata.Models.Funder>
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.Owin
+
+<section class="page-title-section overlay" data-background="~/images/backgrounds/page-title.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <ul class="list-inline custom-breadcrumb">
+                    <li class="list-inline-item"><a class="h2 text-primary font-secondary" href="courses.html">Pledgers</a></li>
+                    <li class="list-inline-item text-white h3 font-secondary "></li>
+                </ul>
+                <p class="text-lighten">View users who pledged to give you money.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <!-- course list -->
+        <div class="row justify-content-left">
+            @foreach (var item in Model)
+            {
+                string s = item.ApplicationUsersAndPledge;
+                string[] s22 = s.Split(':');
+                foreach (var i2 in s22)
+                {
+                    string[] s2 = i2.Split(',');
+                    string s3 = s2[0].Substring(1);
+                    string s4 = s2[1].Substring(0, s2[1].Length - 1);
+                    ApplicationUser applicationUser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(s3);
+
+                    <div class="col-lg-4 col-sm-6 mb-5">
+                        <div class="card p-0 border-primary rounded-0 hover-shadow">
+                            @try
+                            {
+                                if (applicationUser.Files.Any(f => f.FileType == Irdata.Models.FileType.Avatar))
+                                {
+                                    <img class="card-img-top rounded-0" src="~/File?id=@applicationUser.Files.First().FileId" alt="course thumb">
+                                }
+                            }
+                            catch
+                            {
+
+                            }
+                            @try
+                            {
+                                <div class="card-body">
+                                    <h4 class="card-title">Name : @applicationUser.DisplayName</h4>
+                                    <h5 class="card-title">Pledge :  @s4 br.</h5>
+                                    <h5 class="card-title">Phone Number :  @applicationUser.PhoneNumber </h5>
+                                    <p class="card-text mb-4">Email :  @applicationUser.Email </p>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="list-inline mb-2">
+                                        <li class="list-inline-item"><a href="mailto:@applicationUser.Email">Email Me</a></li>
+                                        <li class="list-inline-item"><a href="callto:@applicationUser.PhoneNumber">Call Me</a></li>
+                                    </ul>
+                                </div>
+                            }
+                            catch
+                            {
+
+                            }
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</section>

@@ -1,0 +1,97 @@
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.Owin
+    <section class="hero-section overlay bg-cover" data-background="~/images/banner/banner-1.jpg" name="introSection">
+<div class="container">
+    <div class="hero-slider">
+        <!-- slider item -->
+        <div class="hero-slider-item">
+            <div class="row">
+                <div class="col-md-8">
+                    <h1 class="text-white">
+                        Irdata
+                    </h1>
+                    <p class="text-muted mb-4">
+                        <span style="color: rgb(255, 255, 255); font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+                            We are a company invested in the <b>betterment</b> of our society. <br />
+                            This society is infactuated with <b>wealth</b> and <b>power</b> rather than collective improvement and overall satisfaction of our community. <br />
+                            Using this service You can contribute to your society by <br />
+                            - <b>Volunteering</b> at beneficial events. <br />
+                            - <b>Pledging</b> for several Fund-Mes for users. <br />
+                            - Creating your <b>own Fund-Me</b> if in need. <br />
+                            - <b>Contacting</b> a user if in need. <br />
+                        </span>
+                    </p>
+                    @try
+                    {
+                        if (System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId()).AccountId == 2)
+                        {
+                            <a href="~/Home" class="btn btn-primary">Explore</a>
+                        }
+                    }
+                    catch
+                    {
+                        <a href="~/Account/Register" class="btn btn-primary">Register</a>
+                    }
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+    <section class="bg-gray" name="introSectionDesc">
+        <div class="container-fluid p-0">
+            <div class="row no-gutters">
+                <div class="col-xl-4 col-lg-5 align-self-end">
+                    <img class="img-fluid w-100" src="/images/banner/banner-feature.png" alt="banner-feature">
+                </div>
+                <div class="col-xl-8 col-lg-7">
+                    <div class="row" style="height:80%;padding-top:5%;">
+                        <div class="col" style="padding-top:5%;">
+                            <i class="ti-blackboard mb-xl-4 mb-lg-3 mb-4 feature-icon d-flex justify-content-center"></i>
+                            <h3 class="mb-xl-4 mb-lg-3 mb-4 d-flex justify-content-center">Users Counter</h3>
+                            <h1 style="font-size:100px" class="d-flex justify-content-center">@ViewBag.Users</h1>
+                        </div>
+                        <div class="col-6" id="chartContainer" style="height:75%">
+                            <script type="text/javascript">
+	                        window.onload = function () {
+                            var chart = new CanvasJS.Chart("chartContainer", {
+	                            exportEnabled: true,
+	                            animationEnabled: true,
+	                            /*title:{
+		                            text: "State Operating Funds"
+	                            },*/
+	                            legend:{
+		                            cursor: "pointer",
+		                            itemclick: explodePie
+	                            },
+	                            data: [{
+		                            type: "pie",
+		                            showInLegend: true,
+		                            toolTipContent: "{name}: <strong>{y}%</strong>",
+		                            indexLabel: "{name} - {y}%",
+		                            dataPoints: @Html.Raw(ViewBag.DataPoints)
+	                            }]
+                            });
+                            chart.render();
+                            }
+                                function explodePie (e) {
+	                                if(typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+		                                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+	                                } else {
+		                                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+	                                }
+    	                        e.chart.render();
+                            }
+                            </script>
+                            @Scripts.Render("~/bundles/canvasScripts")
+                        </div>
+                        <div class="col" style="padding-top:5%;">
+                            <i class="ti-agenda mb-xl-4 mb-lg-3 mb-4 feature-icon d-flex justify-content-center"></i>
+                            <h3 class="mb-xl-4 mb-lg-3 mb-4 d-flex justify-content-center">Events Counter</h3>
+                            <h1 style="font-size:100px" class="d-flex justify-content-center">@ViewBag.Events</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>

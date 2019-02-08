@@ -1,0 +1,139 @@
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.Owin
+@model IEnumerable<Irdata.Models.VolunteeringEvents>
+<section class="page-title-section overlay" data-background="~/images/backgrounds/page-title.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <ul class="list-inline custom-breadcrumb">
+                    <li class="list-inline-item"><a class="h2 text-primary font-secondary" href="courses.html">Fund Mes</a></li>
+                    <li class="list-inline-item text-white h3 font-secondary "></li>
+                </ul>
+                <p class="text-lighten">View some of the volunteering events handpicked by Us.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <!-- course list -->
+        <div class="row justify-content-left">
+            <!-- course item -->
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-sm-6 mb-5">
+                    <div class="card p-0 border-primary rounded-0 hover-shadow">
+                        @if (item.VolunteerFiles.Any(f => f.FileType == FileType.Volunteer))
+                        {
+                            <img class="card-img-top rounded-0" src="~/VolunteerFile?id=@item.VolunteerFiles.First(f => f.FileType == FileType.Volunteer).VolunteerFileId" alt="course thumb">
+                        }
+                        <div class="card-body">
+                            <ul class="list-inline mb-2">
+                                <li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>@Html.DisplayFor(modelItem => item.Date)</li>
+                                @*<li class="list-inline-item">@Html.DisplayFor(modelItem => item.Title)</li>*@
+                            </ul>
+                            <h4 class="card-title">@Html.DisplayFor(modelItem => item.Organization)</h4>
+                            <p class="card-text mb-4">
+                                @*                                @Html.DisplayFor(modelItem => item.Description)*@
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-inline mb-2">
+                                @try
+                                {
+                                    if (System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId()).AccountId == 2)
+                                    {
+                                        <li class="list-inline-item">@Html.ActionLink("Edit", "Edit", new { id = item.VolunteeringEventsId })</li>
+                                        <li class="list-inline-item">@Html.ActionLink("Details", "Details", new { id = item.VolunteeringEventsId })</li>
+                                        <li class="list-inline-item">@Html.ActionLink("Delete", "Delete", new { id = item.VolunteeringEventsId })</li>
+                                    }
+                                    else
+                                    {
+                                        <li class="list-inline-item">@Html.ActionLink("Details", "Details", new { id = item.VolunteeringEventsId })</li>
+                                        <li class="list-inline-item float-right">
+                                            @Html.DisplayFor(modelItem => item.Likes)
+                                            @{
+                                                ApplicationDbContext db = new ApplicationDbContext();
+                                                List<VolunteerDetails> f = db.volunteerDetails.ToList();
+                                                int like = 0;
+                                                foreach (VolunteerDetails f2 in f)
+                                                {
+                                                    if (f2 != null)
+                                                    {
+                                                        if (f2.VolunteeringEvents.VolunteeringEventsId == item.VolunteeringEventsId)
+                                                        {
+                                                            string volDetails = f2.ApplicationUsersAndLikes;
+                                                            string Userid = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                                                            string[] all1 = volDetails.Split(':');
+                                                            List<string> all2 = new List<string>();
+                                                            foreach (string q in all1)
+                                                            {
+                                                                all2.Add(q);
+                                                            }
+                                                            List<string> all3 = new List<string>();
+                                                            bool found = false;
+                                                            foreach (string str in all2)
+                                                            {
+                                                                if (str.Contains(Userid))
+                                                                {
+                                                                    found = true;
+                                                                    string[] prev2 = str.Split(',');
+                                                                    like = Convert.ToInt32(prev2[1].Substring(0, prev2[1].Length - 1));
+                                                                    if (like == 0)
+                                                                    {
+                                                                        like = 1;
+                                                                        <img src="/images/like.png" alt="like" />
+                                                                        @Html.ActionLink("Like", "Like", new { id = item.VolunteeringEventsId })
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        like = 0;
+                                                                        <img src="/images/like (1).png" alt="like" />
+                                                                        @Html.ActionLink("UnLike", "Like", new { id = item.VolunteeringEventsId })
+                                                                    }
+                                                                }
+                                                            }
+                                                            if (found == false)
+                                                            {
+                                                                <img src="/images/like.png" alt="like" />
+                                                                @Html.ActionLink("Like", "Like", new { id = item.VolunteeringEventsId })
+
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="/images/like.png" alt="like" />
+                                                            @Html.ActionLink("Like", "Like", new { id = item.VolunteeringEventsId })
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="/images/like.png" alt="like" />
+
+                                                        @Html.ActionLink("Like", "Like", new { id = item.VolunteeringEventsId })
+                                                    }
+                                                }
+                                                if (f.Count == 0)
+                                                {
+                                                    <img src="/images/like.png" alt="like" />
+                                                    @Html.ActionLink("Like", "Like", new { id = item.VolunteeringEventsId })
+                                                }
+                                            }
+                                        </li>
+                                    }
+                                }
+                                catch
+                                {
+                                    <li class="list-inline-item">@Html.ActionLink("Details", "Details", new { id = item.VolunteeringEventsId })</li>
+                                }
+
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

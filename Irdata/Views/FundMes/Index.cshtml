@@ -1,0 +1,94 @@
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.Owin
+@model IEnumerable<Irdata.Models.FundMe>
+<section class="page-title-section overlay" data-background="~/images/backgrounds/page-title.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <ul class="list-inline custom-breadcrumb">
+                    <li class="list-inline-item"><a class="h2 text-primary font-secondary" href="courses.html">Fund Mes</a></li>
+                    <li class="list-inline-item text-white h3 font-secondary "></li>
+                </ul>
+                <p class="text-lighten">View some of the Fund Me's created by our users.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <!-- course list -->
+        <div class="row justify-content-left">
+            <!-- course item -->
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-sm-6 mb-5">
+                    <div class="card p-0 border-primary rounded-0 hover-shadow">
+                        @if (item.FundMeFiles.Any(f => f.FileType == FileType.Fund))
+                        {
+
+                            <img class="card-img-top rounded-0" src="~/FundMeFile?id=@item.FundMeFiles.First(f => f.FileType == FileType.Fund).FundMeFileId" alt="course thumb">
+                        }
+                        <div class="card-body">
+                            <ul class="list-inline mb-2">
+                                <li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>@Html.DisplayFor(modelItem => item.date)</li>
+                                @*<li class="list-inline-item">@Html.DisplayFor(modelItem => item.Title)</li>*@
+                                <li class="list-inline-item"> Time : @Html.DisplayFor(modelItem => item.duration) weeks</li>
+                            </ul>
+                            @if (item.status == 3)
+                            {
+                                <h4 class="card-title alert-success"> Successfully Raised </h4>
+                            }
+                            @if (item.status == 2)
+                            {
+                                <h4 class="card-title alert-danger"> Failed To Raise </h4>
+                            }
+                            @if (item.status == 0)
+                            {
+                                <h4 class="card-title alert-info"> Ongoing</h4>
+                            }
+                            @if (item.status == 1)
+                            {
+                                <h4 class="card-title alert-warning">Expired</h4>
+                            }
+
+                            <h4 class="card-title">Target: @Html.DisplayFor(modelItem => item.TargetFunds) br.</h4>
+                            <h4 class="card-title">Current: @Html.DisplayFor(modelItem => item.CurrentFunds) br.</h4>
+                            <p class="card-text mb-4">
+                                @*                                @Html.DisplayFor(modelItem => item.Description)*@
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-inline mb-2">
+                                <li class="list-inline-item">@Html.ActionLink("Details", "Details", new { id = item.FundMeId })</li>
+                                @try
+                                {
+                                    if (System.Web.HttpContext.Current.User.Identity.GetUserId() == item.ApplicationUser.Id)
+                                    {
+                                        if (item.status == 3)
+                                        {
+                                            <li class="list-inline-item">@Html.ActionLink("View Pledgers", "ViewPledgers", new { id = item.FundMeId })</li>
+                                        }
+                                        <li class="list-inline-item">@Html.ActionLink("Delete", "Delete", new { id = item.FundMeId })</li>
+                                    }
+                                    else
+                                    {
+                                        <li class="list-inline-item"><a href="mailto:@item.ApplicationUser.Email">Contact Me</a></li>
+                                        if (item.status == 0)
+                                        {
+                                            <li class="list-inline-item">@Html.ActionLink("Pledge", "Pledge", new { id = item.FundMeId })</li>
+                                        }
+                                    }
+                                }
+                                catch
+                                {
+                                }
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

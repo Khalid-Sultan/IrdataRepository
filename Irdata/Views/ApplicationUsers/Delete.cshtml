@@ -1,0 +1,144 @@
+﻿@model Irdata.Models.ApplicationUser
+<section class="hero-section overlay bg-cover" data-background="~/../images/banner/banner-1.jpg" name="introSection">
+    <div class="container">
+        <div class="hero-slider">
+            <!-- slider item -->
+            <div class="hero-slider-item">
+                <div class="container-fluid p-0">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-5">
+                            <h1 class="text-white">
+                                Delete User
+                            </h1>
+                            <p class="text-muted mb-4">
+                                <span style="color: rgb(255, 255, 255); font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+                                    Are you sure you want to delete this user?
+                                </span>
+                            </p>
+                        </div>
+                        <div class="col-xl-6 col-lg-7">
+                            <div class="col-md-6">
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.Account.Name)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.Account.Name)
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.DisplayName)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.DisplayName)
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.Email)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.Email)
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.EmailConfirmed)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.EmailConfirmed)
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.PasswordHash)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.PasswordHash)
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.SecurityStamp)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.SecurityStamp)
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.PhoneNumber)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.PhoneNumber)
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.PhoneNumberConfirmed)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.PhoneNumberConfirmed)
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.TwoFactorEnabled)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.TwoFactorEnabled)
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.LockoutEndDateUtc)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.LockoutEndDateUtc)
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.LockoutEnabled)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.LockoutEnabled)
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.AccessFailedCount)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.AccessFailedCount)
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.UserName)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.UserName)
+                                    </dd>
+
+                                </dl>
+
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.AntiForgeryToken()
+
+                                    <div class="form-actions no-color">
+                                        <input type="submit" value="Delete" class="btn btn-default" /> |
+                                        @Html.ActionLink("Back to List", "Index")
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

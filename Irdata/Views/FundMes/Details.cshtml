@@ -1,0 +1,71 @@
+﻿@model Irdata.Models.FundMe
+<section class="hero-section overlay bg-cover" data-background="~/images/banner/banner-1.jpg" name="introSection">
+    <div class="container">
+        <div class="hero-slider">
+            <!-- slider item -->
+            <div class="hero-slider-item">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h1 class="text-white">
+                            Fund Me Details
+                        </h1>
+                        <p class="text-muted mb-4">
+                            <span style="color: rgb(255, 255, 255); font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+                                View the details of the fund me here.
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-horizontal">
+                            <hr />
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2 text-white h3 text-capitalize" })
+                                <div class="col-md-12 text-white h5 text-capitalize">
+                                    @Html.DisplayFor(model => model.Title, new { htmlAttributes = new { @class = "form-control h5 text-capitalize" } })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.date, htmlAttributes: new { @class = "control-label col-md-2 text-white h3 text-capitalize" })
+                                <div class="col-md-12 text-white h5 text-capitalize">
+                                    @Html.DisplayFor(model => model.date, new { htmlAttributes = new { @class = "form-control h5 text-capitalize" } })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.duration, htmlAttributes: new { @class = "control-label col-md-2 text-white h3 text-capitalize" })
+                                <div class="col-md-12 text-white h5 text-capitalize">
+                                    @Html.DisplayFor(model => model.duration, new { htmlAttributes = new { @class = "form-control h5 text-capitalize" } })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2 text-white h3 text-capitalize" })
+                                <div class="col-md-12 text-white h5 text-capitalize">
+                                    @Html.DisplayFor(model => model.Description, new { htmlAttributes = new { @class = "form-control h5 text-capitalize" } })
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                @Html.LabelFor(model => model.CurrentFunds, htmlAttributes: new { @class = "control-label col-md-2 text-white h3 text-capitalize" })
+                                <div class="col-md-12 text-white h5 text-capitalize">
+                                    @Html.DisplayFor(model => model.CurrentFunds, new { htmlAttributes = new { @class = "form-control h5 text-capitalize" } })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.TargetFunds, htmlAttributes: new { @class = "control-label col-md-2 text-white h3 text-capitalize" })
+                                <div class="col-md-12 text-white h5 text-capitalize">
+                                    @Html.DisplayFor(model => model.TargetFunds, new { htmlAttributes = new { @class = "form-control h5 text-capitalize" } })
+                                </div>
+                            </div>
+                            @if (Model.FundMeFiles.Any(f => f.FileType == FileType.Fund))
+                            {
+                                <img src="~/FundMeFile/?id=@Model.FundMeFiles.First(f => f.FileType == FileType.Fund).FundMeFileId" class="card-img-top rounded-0" />
+                            }
+                        </div>
+                        <br /><br />
+                        <p>
+                            @Html.ActionLink("Back to List", "Index")
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

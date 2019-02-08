@@ -1,0 +1,70 @@
+﻿@*@using Microsoft.AspNet.Identity
+    @if (Request.IsAuthenticated)
+    {
+        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
+        }
+    }
+    else
+    {
+        <ul class="nav navbar-nav navbar-right">
+            <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+            <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        </ul>
+    }*@
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.Owin
+@if (Request.IsAuthenticated)
+{
+    <li class="nav-item">
+        <div class="row no-gutters">
+            @if (System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId()).Files.Any(f => f.FileType == Irdata.Models.FileType.Avatar))
+            {
+                <div class="col-lg-6 text-center text-lg-left">
+                    <img src="~/File?id=@(System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId()).Files.First().FileId)" alt="avatar" style="width:65px;height:65px;border-radius:50%;margin-top:25%" />
+                </div>
+                <div class="col-lg-6 text-center text-lg-right">
+                    @*@Html.ActionLink(User.Identity.GetUserName(), "Edit", "http://localhost:53542/ApplicationUsers", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })*@
+                    <a href="/ApplicationUsers/Edit/@System.Web.HttpContext.Current.User.Identity.GetUserId()" class="nav-link">@{var s = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId()).DisplayName;}@s</a>
+
+</div>
+            }
+            else
+            {
+                <a href="/ApplicationUsers/Edit/@System.Web.HttpContext.Current.User.Identity.GetUserId()" class="nav-link">@{var s = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId()).DisplayName;}@s</a>
+                @*@Html.ActionLink(User.Identity.GetUserName(), "ApplicationUsers", "Edit", htmlAttributes : new {  @class = "nav-link" , id= System.Web.HttpContext.Current.User.Identity.GetUserId()})*@
+            }
+        </div>
+</li>
+    <li class="nav-item">
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+        {
+            @Html.AntiForgeryToken()
+            <a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">Log off</a>
+        }
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        @*<a class="nav-link" href="#" data-toggle="modal"
+            data-target="#loginModal">LOGIN</a>*@
+        @Html.ActionLink("LOGIN", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })
+    </li>
+    <li class="nav-item">
+        @Html.ActionLink("REGISTER", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })
+    </li>
+
+    @*<li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
+}
+
+

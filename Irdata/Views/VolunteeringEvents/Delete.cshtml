@@ -1,0 +1,65 @@
+﻿@model Irdata.Models.VolunteeringEvents
+ 
+<section class="hero-section overlay bg-cover" data-background="~/images/banner/banner-1.jpg" name="introSection">
+    <div class="container">
+        <div class="hero-slider">
+            <!-- slider item -->
+            <div class="hero-slider-item">
+                <div class="container-fluid">
+                    <div class="row">
+                        <h3>Are you sure you want to delete this?</h3>
+                        <div>
+                            <h4>Event Details</h4>
+                            <hr />
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Date)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.Date)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Title)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.Title)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Organization)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.Organization)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Description)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.Description)
+                                </dd>
+
+                            </dl>
+
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <div class="form-actions no-color">
+                                    <input type="submit" value="Delete" class="btn btn-default" /> |
+                                    @Html.ActionLink("Back to List", "Index")
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
