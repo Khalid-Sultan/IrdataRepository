@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-8">
                 <ul class="list-inline custom-breadcrumb">
-                    <li class="list-inline-item"><a class="h2 text-primary font-secondary" href="courses.html">Fund Mes</a></li>
+                    <li class="list-inline-item"><a class="h2 text-primary font-secondary" href="courses.html">Volunteer</a></li>
                     <li class="list-inline-item text-white h3 font-secondary "></li>
                 </ul>
                 <p class="text-lighten">View some of the volunteering events handpicked by Us.</p>
@@ -22,21 +22,44 @@
             @foreach (var item in Model)
             {
                 <div class="col-lg-4 col-sm-6 mb-5">
-                    <div class="card p-0 border-primary rounded-0 hover-shadow">
-                        @if (item.VolunteerFiles.Any(f => f.FileType == FileType.Volunteer))
-                        {
-                            <img class="card-img-top rounded-0" src="~/VolunteerFile?id=@item.VolunteerFiles.First(f => f.FileType == FileType.Volunteer).VolunteerFileId" alt="course thumb">
-                        }
+                    <div class="card border-0 rounded-0 hover-shadow">
+                        <div class="card-img position-relative">
+                            @if (item.VolunteerFiles.Any(f => f.FileType == FileType.Volunteer))
+                            {
+                                <img class="card-img-top rounded-0" src="~/VolunteerFile?id=@item.VolunteerFiles.First(f => f.FileType == FileType.Volunteer).VolunteerFileId" alt="event thumb">
+                            }
+                            <div class="card-date">
+                                <span>
+                                    @{
+                                            string[] s = item.Date.Split('/');
+                                            DateTime dateTime = new DateTime(Convert.ToInt32(s[0]), Convert.ToInt32(s[1]), Convert.ToInt32(s[2]));
+                                            string day = dateTime.Day.ToString();
+                                            string month = null;
+                                            switch (dateTime.Month)
+                                            {
+                                                case 1: { month = "January"; break; }
+                                                case 2: {month = "February"; break; }
+                                                case 3: {month = "March"; break; }
+                                                case 4: {month = "April"; break;}
+                                                case 5: {month = "May"; break;}
+                                                case 6: {month = "June"; break;}
+                                                case 7: {month = "July"; break;}
+                                                case 8: {month = "August"; break;}
+                                                case 9: {month = "September"; break;}
+                                                case 10: {month = "October"; break;}
+                                                case 11: {month = "November"; break;}
+                                                case 12: {month = "December"; break;}
+                                                default: break;
+                                            }
+                                    }
+                                    @day
+                                </span><br>@month
+                            </div>
+                        </div>
                         <div class="card-body">
-                            <ul class="list-inline mb-2">
-                                <li class="list-inline-item"><i class="ti-calendar mr-1 text-color"></i>@Html.DisplayFor(modelItem => item.Date)</li>
-                                @*<li class="list-inline-item">@Html.DisplayFor(modelItem => item.Title)</li>*@
-                            </ul>
-                            <h4 class="card-title">@Html.DisplayFor(modelItem => item.Organization)</h4>
-                            <p class="card-text mb-4">
-                                @*                                @Html.DisplayFor(modelItem => item.Description)*@
-                                @Html.DisplayFor(modelItem => item.Title)
-                            </p>
+                            <!-- location -->
+                            <p><i class="ti-location-pin text-primary mr-2"></i>@Html.DisplayFor(modelItem => item.Organization)</p>
+                            <h4 class="card-title"> @Html.DisplayFor(modelItem => item.Title)</h4>
                         </div>
                         <div class="card-body">
                             <ul class="list-inline mb-2">
@@ -57,12 +80,14 @@
                                                 ApplicationDbContext db = new ApplicationDbContext();
                                                 List<VolunteerDetails> f = db.volunteerDetails.ToList();
                                                 int like = 0;
+                                                int i = 0;
                                                 foreach (VolunteerDetails f2 in f)
                                                 {
                                                     if (f2 != null)
                                                     {
                                                         if (f2.VolunteeringEvents.VolunteeringEventsId == item.VolunteeringEventsId)
                                                         {
+                                                            i = 1;
                                                             string volDetails = f2.ApplicationUsersAndLikes;
                                                             string Userid = System.Web.HttpContext.Current.User.Identity.GetUserId();
                                                             string[] all1 = volDetails.Split(':');
@@ -92,6 +117,7 @@
                                                                         <img src="/images/like (1).png" alt="like" />
                                                                         @Html.ActionLink("UnLike", "Like", new { id = item.VolunteeringEventsId })
                                                                     }
+                                                                    break;
                                                                 }
                                                             }
                                                             if (found == false)
@@ -101,21 +127,26 @@
 
                                                             }
                                                         }
+
                                                         else
                                                         {
-                                                            <img src="/images/like.png" alt="like" />
-                                                            @Html.ActionLink("Like", "Like", new { id = item.VolunteeringEventsId })
+                                                            @*if (i == 1)
+                                                                {
+                                                                    <img src="/images/like.png" alt="like" />
+                                                                    @Html.ActionLink("Like", "Like", new { id = item.VolunteeringEventsId })
+                                                                }*@
                                                         }
                                                     }
                                                     else
                                                     {
-                                                        <img src="/images/like.png" alt="like" />
-
-                                                        @Html.ActionLink("Like", "Like", new { id = item.VolunteeringEventsId })
+                                                        @*i = 1;
+                                                            <img src="/images/like.png" alt="like" />
+                                                            @Html.ActionLink("Like", "Like", new { id = item.VolunteeringEventsId })*@
                                                     }
                                                 }
-                                                if (f.Count == 0)
+                                                if (i == 0)
                                                 {
+                                                    i++;
                                                     <img src="/images/like.png" alt="like" />
                                                     @Html.ActionLink("Like", "Like", new { id = item.VolunteeringEventsId })
                                                 }
@@ -130,9 +161,11 @@
 
 
                             </ul>
+
                         </div>
                     </div>
                 </div>
+
             }
         </div>
     </div>

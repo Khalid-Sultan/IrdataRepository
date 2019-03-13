@@ -34,12 +34,20 @@ namespace Irdata.Controllers
             foreach (FundMe fundMe in fundMes)
             {
                 DateTime dateTime2 = dateTime(fundMe.date);
-                dateTime2.AddDays(fundMe.duration * 7);
+                //dateTime2.AddDays(fundMe.duration * 7);
                 DateTime Now = DateTime.Now;
-                int yearDifference = dateTime2.Year - Now.Year;
-                int monthDifference = dateTime2.Month - Now.Month;
-                int dayDifference = dateTime2.Day - Now.Day;
-                if (yearDifference < 0)
+                if ((Now-dateTime2).TotalDays == 0)
+                {
+                    if (fundMe.CurrentFunds < fundMe.TargetFunds)
+                    {
+                        db.FundMes.Find(fundMe.FundMeId).status = 0;
+                    }
+                    else
+                    {
+                        db.FundMes.Find(fundMe.FundMeId).status = 3;
+                    }
+                }
+                else if ((Now - dateTime2).TotalDays > (fundMe.duration*7))
                 {
                     if (fundMe.CurrentFunds < fundMe.TargetFunds)
                     {
@@ -50,54 +58,17 @@ namespace Irdata.Controllers
                         if (fundMe.status != 3) db.FundMes.Find(fundMe.FundMeId).status = 2;
                     }
                 }
-                else if(yearDifference==0)
+                else
                 {
-                    if (monthDifference < 0)
-                    {
-                        if (fundMe.CurrentFunds < fundMe.TargetFunds)
-                        {
-                            if (fundMe.status != 3) db.FundMes.Find(fundMe.FundMeId).status = 1;
-                        }
-                        else
-                        {
-                            if (fundMe.status != 3) db.FundMes.Find(fundMe.FundMeId).status = 2;
-                        }
-                    }
-                    else if(monthDifference==0)
-                    {
-                        if (dayDifference < 0)
-                        {
-                            if (fundMe.CurrentFunds < fundMe.TargetFunds)
-                            {
-                                if (fundMe.status != 3) db.FundMes.Find(fundMe.FundMeId).status = 1;
-                            }
-                            else
-                            {
-                                if (fundMe.status != 3) db.FundMes.Find(fundMe.FundMeId).status = 2;
-                            }
-                        }
-                        else
-                        {
-                            if (fundMe.CurrentFunds < fundMe.TargetFunds)
-                            {
-                                db.FundMes.Find(fundMe.FundMeId).status = 0;
-                            }
-                            else
-                            {
-                                db.FundMes.Find(fundMe.FundMeId).status = 3;
-                            }
-                        }
-                    }
-                    else
+                    if (fundMe.CurrentFunds < fundMe.TargetFunds)
                     {
                         db.FundMes.Find(fundMe.FundMeId).status = 0;
                     }
+                    else
+                    {
+                        db.FundMes.Find(fundMe.FundMeId).status = 3;
+                    }
                 }
-                else
-                {
-                    db.FundMes.Find(fundMe.FundMeId).status = 0;
-                }
-                //db.SaveChanges();
             }
             db.SaveChanges();
             return View(db.FundMes.ToList());
@@ -179,6 +150,7 @@ namespace Irdata.Controllers
         // GET: FundMes/Edit/5
         public ActionResult Edit(int? id)
         {
+            return HttpNotFound();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -210,7 +182,7 @@ namespace Irdata.Controllers
         // GET: FundMes/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+                if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -219,7 +191,11 @@ namespace Irdata.Controllers
             {
                 return HttpNotFound();
             }
-            return View(fundMe);
+            if (System.Web.HttpContext.Current.User.Identity.GetUserId() == fundMe.ApplicationUser.Id)
+            {
+                return View(fundMe);
+            }
+            return RedirectToAction("Index");
         }
 
         // POST: FundMes/Delete/5

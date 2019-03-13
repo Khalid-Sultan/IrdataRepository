@@ -40,11 +40,18 @@ namespace Irdata.Controllers
         // GET: VolunteeringEvents/Create
         public ActionResult Create()
         {
-            if (System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId()).AccountId == 2)
+            try
             {
-                return View();
+                if (System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId()).AccountId == 2)
+                {
+                    return View();
+                }
+                return RedirectToAction("index");
             }
-            return RedirectToAction("index");
+            catch
+            {
+                return RedirectToAction("index");
+            }
         }
 
         // POST: VolunteeringEvents/Create
@@ -85,20 +92,27 @@ namespace Irdata.Controllers
         // GET: VolunteeringEvents/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId()).AccountId == 2)
+            try
             {
-                if (id == null)
+                if (System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId()).AccountId == 2)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    VolunteeringEvents volunteeringEvents = db.VolunteeringEvents.Find(id);
+                    if (volunteeringEvents == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(volunteeringEvents);
                 }
-                VolunteeringEvents volunteeringEvents = db.VolunteeringEvents.Find(id);
-                if (volunteeringEvents == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(volunteeringEvents);
+                return RedirectToAction("index");
             }
-            return RedirectToAction("index");
+            catch
+            {
+                return RedirectToAction("index");
+            }
         }
 
         // POST: VolunteeringEvents/Edit/5
@@ -124,20 +138,27 @@ namespace Irdata.Controllers
         // GET: VolunteeringEvents/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId()).AccountId == 2)
+            try
             {
-                if (id == null)
+                if (System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId()).AccountId == 2)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    VolunteeringEvents volunteeringEvents = db.VolunteeringEvents.Find(id);
+                    if (volunteeringEvents == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(volunteeringEvents);
                 }
-                VolunteeringEvents volunteeringEvents = db.VolunteeringEvents.Find(id);
-                if (volunteeringEvents == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(volunteeringEvents);
+                return RedirectToAction("index");
             }
-            return RedirectToAction("index");
+            catch
+            {
+                return RedirectToAction("index");
+            }
         }
 
         // POST: VolunteeringEvents/Delete/5
@@ -157,20 +178,31 @@ namespace Irdata.Controllers
         // GET: VolunteeringEvents/Like/5
         public ActionResult Like(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId()).AccountId == 1)
+                {
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    VolunteeringEvents volunteeringEvents = db.VolunteeringEvents.Find(id);
+                    if (volunteeringEvents == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return Liked(volunteeringEvents.VolunteeringEventsId);
+                }
+                return RedirectToAction("index");
             }
-            VolunteeringEvents volunteeringEvents = db.VolunteeringEvents.Find(id);
-            if (volunteeringEvents == null)
+            catch
             {
-                return HttpNotFound();
+                return RedirectToAction("index");
             }
-            return Liked(volunteeringEvents.VolunteeringEventsId);
         }
         // POST: VolunteeringEvents/Liked/5
         public ActionResult Liked(int id)
-        { 
+        {
             try
             {
                 if (System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId()).AccountId == 2)

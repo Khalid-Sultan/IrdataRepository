@@ -107,7 +107,7 @@
                             to support those who beg, who plead for help and to volunteer for
                             programs that would make every party happy.&nbsp;
                         </p>
-                        <a href="about.html" class="btn btn-primary-outline">Learn more</a>
+                        @Html.ActionLink(" Learn More", "About", "Home", routeValues: null, htmlAttributes: new { @class = "btn btn-primary-outline" })
                     </div>
                     <div class="col-md-6 order-1 order-md-2 mb-4 mb-md-0">
                         <img class="img-fluid w-100"
@@ -132,7 +132,7 @@
                                     </h1>
                                     <p class="text-muted mb-4">
                                         <span style="color: rgb(255, 255, 255); font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
-                                            Choose your poison
+                                            Choose from the given options :-
                                         </span>
                                     </p>
                                 </div>
@@ -199,7 +199,7 @@
                             to support those who beg, who plead for help and to volunteer for
                             programs that would make every party happy.&nbsp;
                         </p>
-                        <a href="about.html" class="btn btn-primary-outline">Learn more</a>
+                        @Html.ActionLink(" Learn More", "About", "Home", routeValues: null, htmlAttributes: new { @class = "btn btn-primary-outline" })
                     </div>
                     <div class="col-md-6 order-1 order-md-2 mb-4 mb-md-0">
                         <img class="img-fluid w-100"
@@ -232,7 +232,7 @@ else
                                     parents, and the lack of social services are big factors
                                 </span>
                             </p>
-                            <a href="contact.html" class="btn btn-primary">Register</a>
+                            @Html.ActionLink("Register Now", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary" })
                         </div>
                     </div>
                 </div>

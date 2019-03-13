@@ -134,3 +134,4 @@ C:\Users\KhalidSultan\source\repos\Irdata\Irdata\obj\Debug\Irdata.Migrations.tes
 C:\Users\KhalidSultan\source\repos\Irdata\Irdata\obj\Debug\Irdata.Migrations.z.resources
 C:\Users\KhalidSultan\source\repos\Irdata\Irdata\obj\Debug\Irdata.Migrations.zfinale.resources
 C:\Users\KhalidSultan\source\repos\Irdata\Irdata\obj\Debug\Irdata.Migrations.zfinale2.resources
+C:\Users\KhalidSultan\source\repos\Irdata\Irdata\obj\Debug\Irdata.csprojAssemblyReference.cache
